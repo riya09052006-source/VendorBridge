@@ -15,22 +15,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <h1 className="text-xl font-bold text-white">VendorBridge</h1>
         </div>
         <nav className="flex-1 overflow-y-auto py-4">
-          <ul className="space-y-1 px-3">
+        <ul className="space-y-1 px-3">
             <li>
-              <Link href="/dashboard" className="flex items-center px-3 py-2 bg-blue-600 rounded-md text-sm font-medium">
+            <Link href="/dashboard" className="flex items-center px-3 py-2 hover:bg-gray-800 rounded-md text-sm font-medium text-gray-300 transition-colors">
                 <LayoutDashboard className="w-5 h-5 mr-3" /> Dashboard
-              </Link>
+            </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center px-3 py-2 hover:bg-gray-800 rounded-md text-sm font-medium text-gray-300">
+            <Link href="/dashboard/vendors" className="flex items-center px-3 py-2 hover:bg-gray-800 rounded-md text-sm font-medium text-gray-300 transition-colors">
                 <Users className="w-5 h-5 mr-3" /> Vendors
-              </Link>
+            </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center px-3 py-2 hover:bg-gray-800 rounded-md text-sm font-medium text-gray-300">
+            <Link href="/dashboard/rfqs" className="flex items-center px-3 py-2 hover:bg-gray-800 rounded-md text-sm font-medium text-gray-300 transition-colors">
                 <FileText className="w-5 h-5 mr-3" /> RFQ's
-              </Link>
+            </Link>
             </li>
+            {/* Leave the rest of the links below this as href="#" for now! */}
             <li>
               <Link href="#" className="flex items-center px-3 py-2 hover:bg-gray-800 rounded-md text-sm font-medium text-gray-300">
                 <ClipboardList className="w-5 h-5 mr-3" /> Quotations
