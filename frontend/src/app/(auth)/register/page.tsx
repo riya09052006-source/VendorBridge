@@ -24,11 +24,11 @@ export default function RegisterScreen() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">First Name</label>
-            <input type="text" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            <input type="text" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Last Name</label>
-            <input type="text" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            <input type="text" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
           </div>
         </div>
 
@@ -36,11 +36,11 @@ export default function RegisterScreen() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Email Address</label>
-            <input type="email" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            <input type="email" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-            <input type="tel" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            <input type="tel" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
           </div>
         </div>
 
@@ -48,24 +48,24 @@ export default function RegisterScreen() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Role</label>
-            <select className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500">
-              <option value="">Select Role</option>
-              <option value="vendor">Vendor</option>
-              <option value="procurement_officer">Procurement Officer</option>
-              <option value="manager">Manager / Approver</option>
-              <option value="admin">Admin</option>
+            <select className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500">
+              <option className="text-gray-900" value="">Select Role</option>
+              <option className="text-gray-900" value="vendor">Vendor</option>
+              <option className="text-gray-900" value="procurement_officer">Procurement Officer</option>
+              <option className="text-gray-900" value="manager">Manager / Approver</option>
+              <option className="text-gray-900" value="admin">Admin</option>
             </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Country</label>
-            <input type="text" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            <input type="text" className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
           </div>
         </div>
 
         {/* Additional Info */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Additional Information</label>
-          <textarea rows={3} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+          <textarea rows={3} className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
         </div>
 
         {/* Submit Button */}
