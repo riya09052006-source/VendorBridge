@@ -1,12 +1,27 @@
+"use client"; // 1. ADDED: This is required because we are adding click events and router navigation
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'; // 2. ADDED: To redirect after logout
+import Cookies from 'js-cookie'; // 3. ADDED: To delete the secure tokens
 import { 
   LayoutDashboard, Users, FileText, ClipboardList, 
   CheckSquare, ShoppingCart, Receipt, BarChart, 
-  Activity, UserCircle2 
+  Activity, UserCircle2, LogOut // 4. ADDED: LogOut icon
 } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
+  // 5. ADDED: The Logout Function
+  const handleLogout = () => {
+    // Delete the security cookies
+    Cookies.remove('access_token');
+    Cookies.remove('refresh_token');
+    
+    // Teleport back to the login screen
+    router.push('/login');
+  };
+
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
@@ -31,7 +46,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <FileText className="w-5 h-5 mr-3" /> RFQ's
             </Link>
             </li>
-            {/* Leave the rest of the links below this as href="#" for now! */}
             <li>
               <Link href="#" className="flex items-center px-3 py-2 hover:bg-gray-800 rounded-md text-sm font-medium text-gray-300">
                 <ClipboardList className="w-5 h-5 mr-3" /> Quotations
@@ -68,11 +82,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        
         {/* Topbar */}
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-end px-6">
-          <div className="flex items-center cursor-pointer">
-            <UserCircle2 className="w-8 h-8 text-gray-600" />
+        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-end px-6 space-x-4">
+          
+          <div className="flex items-center cursor-pointer text-gray-600 hover:text-gray-900 transition-colors">
+            <UserCircle2 className="w-8 h-8" />
           </div>
+          
+          {/* 6. ADDED: The physical Logout Button */}
+          <button 
+            onClick={handleLogout}
+            className="flex items-center px-3 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition-colors"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Logout
+          </button>
+          
         </header>
 
         {/* Dynamic Page Content */}
