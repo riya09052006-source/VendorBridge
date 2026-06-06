@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/rfqs/', include('rfqs.urls')),
     path('api/quotations/', include('quotations.urls')),
     path('api/approvals/', include('approvals.urls')),
+    path('api/orders/', include('orders.urls')),
 ]
