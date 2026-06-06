@@ -8,14 +8,14 @@ export default function DashboardScreen() {
       {/* Header section */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
-        <p className="text-gray-600 mt-1">Welcome back, Procurement Officer - Today's Overview</p>
+        <p className="text-gray-600 mt-1">Welcome back, Procurement Officer - Today&apos;s Overview</p>
       </div>
 
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
           <span className="text-3xl font-bold text-gray-900">12</span>
-          <span className="text-sm font-medium text-gray-500 mt-1">Active RFQ's</span>
+          <span className="text-sm font-medium text-gray-500 mt-1">Active RFQ&apos;s</span>
         </div>
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
           <span className="text-3xl font-bold text-gray-900">5</span>
@@ -23,7 +23,7 @@ export default function DashboardScreen() {
         </div>
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
           <span className="text-3xl font-bold text-gray-900">$2.3L</span>
-          <span className="text-sm font-medium text-gray-500 mt-1">PO's this month</span>
+          <span className="text-sm font-medium text-gray-500 mt-1">PO&apos;s this month</span>
         </div>
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center text-center">
           <span className="text-3xl font-bold text-gray-900">3</span>
