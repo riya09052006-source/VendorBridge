@@ -1,23 +1,27 @@
 "use client";
+import { useState } from 'react';
 import Link from 'next/link';
+import { Eye, EyeOff } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useRouter } from 'next/navigation';
+import { apiClient } from '@/lib/api';
+import Cookies from 'js-cookie';
 
-// 1. Define the strict validation rules using Zod
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Please enter a valid email address."),
   password: z.string().min(6, "Password must be at least 6 characters."),
 });
 
-// Create a TypeScript type from our schema
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginScreen() {
   const router = useRouter(); 
+  
+  // The memory switch for the password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
-  // 2. Initialize the form hook
   const {
     register,
     handleSubmit,
@@ -26,11 +30,24 @@ export default function LoginScreen() {
     resolver: zodResolver(loginSchema),
   });
 
-  // 3. The function that runs when the user clicks "Sign In"
   const onSubmit = async (data: LoginFormData) => {
-    console.log("Data ready to send to Django:", data);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    router.push('/dashboard');
+    try {
+      const response = await apiClient.post('/auth/login/', {
+        email: data.email, 
+        password: data.password,
+      });
+
+      Cookies.set('access_token', response.data.access, { expires: 1 }); 
+      if (response.data.refresh) {
+         Cookies.set('refresh_token', response.data.refresh, { expires: 7 }); 
+      }
+
+      router.push('/dashboard');
+      
+    } catch (error: any) {
+      console.error("Login failed:", error);
+      alert("Invalid email or password. Please try again.");
+    }
   };
 
   return (
@@ -63,14 +80,27 @@ export default function LoginScreen() {
               Forgot password?
             </Link>
           </div>
-          <input 
-            type="password" 
-            {...register("password")} 
-            className={`block w-full rounded-xl border px-4 py-3 text-sm text-slate-900 bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 ${
-                errors.password ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:ring-indigo-500/20'
-            }`}
-            placeholder="••••••••"
-          />
+          <div className="relative">
+            <input 
+              type={showPassword ? "text" : "password"} 
+              {...register("password")} 
+              className={`block w-full rounded-xl border px-4 py-3 text-sm text-slate-900 bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 pr-10 ${
+                  errors.password ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:ring-indigo-500/20'
+              }`}
+              placeholder="••••••••"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-indigo-600 transition-colors"
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
           {errors.password && <p className="text-red-500 font-medium text-xs mt-1">{errors.password.message}</p>}
         </div>
 
