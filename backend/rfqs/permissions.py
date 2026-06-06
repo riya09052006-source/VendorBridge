@@ -17,3 +17,15 @@ class IsProcurementOfficerOrReadOnly(BasePermission):
             request.user.is_authenticated and 
             request.user.role in ['PROCUREMENT_OFFICER', 'ADMIN']
         )
+
+class IsProcurementOfficer(BasePermission):
+    """
+    Strictly restricts access to only Procurement Officers or Admins.
+    Vendors are completely blocked from endpoints using this permission.
+    """
+    def has_permission(self, request, view):
+        return bool(
+            request.user and 
+            request.user.is_authenticated and 
+            request.user.role in ['PROCUREMENT_OFFICER', 'ADMIN']
+        )
