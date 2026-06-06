@@ -151,3 +151,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+# Setup Email Backend to print to console for development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
