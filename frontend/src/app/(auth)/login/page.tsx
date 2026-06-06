@@ -21,6 +21,7 @@ export default function LoginScreen() {
   
   // The memory switch for the password visibility
   const [showPassword, setShowPassword] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const {
     register,
@@ -46,7 +47,12 @@ export default function LoginScreen() {
       
     } catch (error: any) {
       console.error("Login failed:", error);
-      alert("Invalid email or password. Please try again.");
+      const data = error.response?.data;
+      if (data?.detail) {
+        setApiError(data.detail);
+      } else {
+        setApiError("Invalid email or password. Please try again.");
+      }
     }
   };
 
@@ -56,6 +62,12 @@ export default function LoginScreen() {
         <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Welcome back</h2>
         <p className="text-slate-500 mt-2 text-sm">Please enter your details to sign in.</p>
       </div>
+
+      {apiError && (
+        <div className="mb-6 bg-red-50 border border-red-100 rounded-xl p-4 shadow-sm">
+          <p className="text-sm text-red-600 font-medium">{apiError}</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
         {/* Email Field */}

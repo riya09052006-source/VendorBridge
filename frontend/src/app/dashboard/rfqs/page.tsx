@@ -1,138 +1,89 @@
 "use client";
-import React from 'react';
-import { Plus, X, UploadCloud } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Plus, Search, FileText, Calendar, MoreVertical } from 'lucide-react';
+import { apiClient } from '@/lib/api';
 
-export default function CreateRFQScreen() {
+export default function RFQsScreen() {
+  const [rfqs, setRfqs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRFQs = async () => {
+      try {
+        const response = await apiClient.get('/rfqs/');
+        setRfqs(response.data);
+      } catch (error) {
+        console.error("Error fetching RFQs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRFQs();
+  }, []);
+
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* Header & Stepper */}
-      <div>
-        <h2 className="text-3xl font-extrabold text-gray-900">Create RFQ&apos;s</h2>
-        <p className="text-gray-600 mt-1">new request for quotation</p>
-        
-        {/* Progress Stepper */}
-        <div className="flex items-center mt-6 max-w-2xl">
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-900 text-white font-bold text-sm border-2 border-blue-900">1</div>
-          <div className="flex-1 h-0.5 bg-gray-300 mx-2"></div>
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-gray-500 font-bold text-sm border-2 border-gray-300">2</div>
-          <div className="flex-1 h-0.5 bg-gray-300 mx-2"></div>
-          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-gray-500 font-bold text-sm border-2 border-gray-300">3</div>
+      <div className="flex justify-between items-end">
+        <div>
+          <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Requests for Quotation</h2>
+          <p className="text-slate-500 mt-1 text-sm">Manage and track your active RFQs.</p>
         </div>
+        <Link href="/dashboard/rfqs/new" className="flex items-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 shadow-[0_4px_14px_0_rgba(99,102,241,0.39)] transition-all active:scale-[0.98]">
+          <Plus className="w-4 h-4 mr-2" /> Create RFQ
+        </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        
-        {/* Left Column: Core RFQ Details */}
-        <div className="space-y-6">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">RFQ&apos;s title*</label>
-            <input 
-              type="text" 
-              defaultValue="Office Furniture procurement Q2"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500" 
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Category</label>
-            <select className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500">
-              <option className="text-gray-900">Furniture</option>
-              <option className="text-gray-900">IT Equipment</option>
-              <option className="text-gray-900">Stationery</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Deadline*</label>
-            <input 
-              type="date" 
-              defaultValue="2025-06-15"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500" 
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700">Description</label>
-            <textarea 
-              rows={3} 
-              defaultValue="Ergonomic chairs and standing desks for 3rd floor"
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500"
-            ></textarea>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="pt-6 space-y-3">
-            <button className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-900 hover:bg-blue-800 focus:outline-none transition-colors">
-              Save & Send to Vendors
-            </button>
-            <button className="w-full flex justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none transition-colors">
-              Save as Draft
-            </button>
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
+        <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+          <div className="relative w-64">
+             <input type="text" placeholder="Search RFQs..." className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all bg-white" />
+             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           </div>
         </div>
-
-        {/* Right Column: Line Items & Assignments */}
-        <div className="space-y-8">
-          
-          {/* Line Items Table */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 uppercase mb-2">Line items</label>
-            <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
-              <table className="w-full text-sm text-left text-gray-900">
-                <thead className="text-xs uppercase bg-gray-50 border-b border-gray-200">
-                  <tr>
-                    <th className="px-4 py-2 font-semibold">Item</th>
-                    <th className="px-4 py-2 font-semibold w-20">Qty</th>
-                    <th className="px-4 py-2 font-semibold w-24">Unit</th>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left">
+            <thead className="text-xs text-slate-500 bg-slate-50/50">
+              <tr>
+                <th className="px-6 py-4 font-medium tracking-wider">Title</th>
+                <th className="px-6 py-4 font-medium tracking-wider">Status</th>
+                <th className="px-6 py-4 font-medium tracking-wider">Deadline</th>
+                <th className="px-6 py-4 font-medium tracking-wider text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {loading ? (
+                 <tr><td colSpan={4} className="px-6 py-8 text-center text-slate-500">Loading RFQs...</td></tr>
+              ) : rfqs.length === 0 ? (
+                 <tr><td colSpan={4} className="px-6 py-8 text-center text-slate-500">No RFQs found.</td></tr>
+              ) : (
+                rfqs.map((rfq: any) => (
+                  <tr key={rfq.id} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="px-6 py-4 font-semibold text-slate-900 flex items-center">
+                       <FileText className="w-4 h-4 mr-2 text-slate-400" />
+                       {rfq.title}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        rfq.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                        rfq.status === 'CLOSED' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
+                        'bg-slate-100 text-slate-700 border border-slate-200'
+                      }`}>
+                        {rfq.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-slate-600 flex items-center">
+                       <Calendar className="w-4 h-4 mr-1 text-slate-400" /> {new Date(rfq.deadline).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                       <button className="text-slate-400 hover:text-indigo-600 transition-colors"><MoreVertical className="w-4 h-4 inline" /></button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-gray-100">
-                    <td className="px-4 py-2">Ergonomic chair</td>
-                    <td className="px-4 py-2">25</td>
-                    <td className="px-4 py-2">NOS</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Standing desks</td>
-                    <td className="px-4 py-2">10</td>
-                    <td className="px-4 py-2">NOS</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <button className="mt-3 flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              <Plus className="w-3.5 h-3.5 mr-1" /> add line item
-            </button>
-          </div>
-
-          {/* Assign Vendors */}
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 uppercase mb-2">Assign Vendors</label>
-            <div className="border border-gray-300 rounded-lg bg-white p-2 space-y-2">
-              <div className="flex justify-between items-center bg-gray-50 border border-gray-200 px-3 py-2 rounded-md">
-                <span className="text-sm text-gray-900 font-medium">Infra Supplies Pvt Ltd</span>
-                <X className="w-4 h-4 text-gray-500 cursor-pointer hover:text-red-500" />
-              </div>
-              <div className="flex justify-between items-center bg-gray-50 border border-gray-200 px-3 py-2 rounded-md">
-                <span className="text-sm text-gray-900 font-medium">Techcore LTD</span>
-                <X className="w-4 h-4 text-gray-500 cursor-pointer hover:text-red-500" />
-              </div>
-            </div>
-            <button className="mt-3 flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-              <Plus className="w-3.5 h-3.5 mr-1" /> add vendor
-            </button>
-          </div>
-
-          {/* Attachments */}
-          <div className="pt-4 border-t border-gray-200">
-             <label className="block text-sm font-semibold text-gray-700 mb-2">Attachments</label>
-             <div className="border-2 border-dashed border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors p-8 flex flex-col items-center justify-center cursor-pointer text-center">
-                <UploadCloud className="w-8 h-8 text-gray-400 mb-2" />
-                <span className="text-sm text-gray-600 font-medium">Drag & drop files or click to upload</span>
-             </div>
-          </div>
-
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

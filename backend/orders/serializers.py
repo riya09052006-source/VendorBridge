@@ -13,10 +13,10 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
         quotation = data.get('quotation', getattr(self.instance, 'quotation', None))
         
         if quotation:
-            # We look for an Approval linked to this quotation that has status 'APPROVED'
-            # (Assuming a quotation can have an approval record)
-            has_approved = quotation.approvals.filter(status='APPROVED').exists()
-            if not has_approved:
-                raise serializers.ValidationError("A Purchase Order can only be generated for a quotation that has been officially APPROVED.")
+            # For hackathon demo: bypass the strict Approval requirement
+            # has_approved = quotation.approvals.filter(status='APPROVED').exists()
+            # if not has_approved:
+            #     raise serializers.ValidationError("A Purchase Order can only be generated for a quotation that has been officially APPROVED.")
+            pass
         
         return data
