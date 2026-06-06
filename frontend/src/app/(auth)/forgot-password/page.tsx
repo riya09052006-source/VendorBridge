@@ -79,7 +79,7 @@ export default function ForgotPasswordScreen() {
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
           <h3 className="text-lg font-medium text-green-900 mb-2">Check your inbox</h3>
           <p className="text-sm text-green-700">
-            We have sent a password reset link to your email address. Please check your spam folder if you don't see it.
+            We have sent a password reset link to your email address. Please check your spam folder if you don&apos;t see it.
           </p>
           <button 
             onClick={() => setIsSubmitted(false)}

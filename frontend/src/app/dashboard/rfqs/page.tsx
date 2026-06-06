@@ -8,7 +8,7 @@ export default function CreateRFQScreen() {
       
       {/* Header & Stepper */}
       <div>
-        <h2 className="text-3xl font-extrabold text-gray-900">Create RFQ's</h2>
+        <h2 className="text-3xl font-extrabold text-gray-900">Create RFQ&apos;s</h2>
         <p className="text-gray-600 mt-1">new request for quotation</p>
         
         {/* Progress Stepper */}
@@ -26,7 +26,7 @@ export default function CreateRFQScreen() {
         {/* Left Column: Core RFQ Details */}
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-semibold text-gray-700">RFQ's title*</label>
+            <label className="block text-sm font-semibold text-gray-700">RFQ&apos;s title*</label>
             <input 
               type="text" 
               defaultValue="Office Furniture procurement Q2"

@@ -43,7 +43,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </li>
             <li>
             <Link href="/dashboard/rfqs" className="flex items-center px-3 py-2 hover:bg-gray-800 rounded-md text-sm font-medium text-gray-300 transition-colors">
-                <FileText className="w-5 h-5 mr-3" /> RFQ's
+                <FileText className="w-5 h-5 mr-3" /> RFQ&apos;s
             </Link>
             </li>
             <li>
