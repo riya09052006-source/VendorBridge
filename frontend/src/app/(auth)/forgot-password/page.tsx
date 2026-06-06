@@ -1,12 +1,11 @@
 "use client";
 import { useState } from 'react';
 import Link from 'next/link';
-import { KeyRound, ArrowLeft } from 'lucide-react';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
-// 1. Define the validation rule (we only need email here)
 const forgotPasswordSchema = z.object({
   email: z.string().min(1, "Email is required").email("Please enter a valid email address."),
 });
@@ -14,7 +13,6 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordData = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordScreen() {
-  // We use this state to switch from the form to a success message
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
@@ -27,63 +25,57 @@ export default function ForgotPasswordScreen() {
 
   const onSubmit = async (data: ForgotPasswordData) => {
     console.log("Sending password reset link to:", data.email);
-    // Simulate API call to Django
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    // Show the success message
     setIsSubmitted(true);
   };
 
   return (
-    <div className="w-full">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-extrabold text-gray-900">Reset Password</h2>
-        <p className="text-sm text-gray-600 mt-2">Enter your email to receive a reset link</p>
+    <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Reset password</h2>
+        <p className="text-slate-500 mt-2 text-sm">Enter your email and we&apos;ll send you a reset link.</p>
       </div>
 
-      {/* If not submitted, show the form. If submitted, show the success message. */}
       {!isSubmitted ? (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
-          
-          {/* Key Icon Placeholder */}
-          <div className="flex justify-center mb-6">
-            <div className="w-24 h-24 rounded-full border-2 border-gray-200 bg-gray-50 flex items-center justify-center">
-               <KeyRound className="w-12 h-12 text-gray-400" />
-            </div>
-          </div>
-
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
           {/* Email Field */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email Address</label>
+          <div className="space-y-1">
+            <label className="block text-sm font-medium text-slate-700">Email address</label>
             <input 
               type="email" 
               {...register("email")} 
-              className={`mt-1 block w-full rounded-md border px-3 py-2 text-sm text-gray-900 bg-white focus:outline-none focus:ring-1 ${
-                  errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              className={`block w-full rounded-xl border px-4 py-3 text-sm text-slate-900 bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+                  errors.email ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:ring-indigo-500/20'
               }`}
-              placeholder="enter your registered email"
+              placeholder="you@company.com"
             />
-            {errors.email && <p className="text-red-600 font-bold text-xs mt-1.5">{errors.email.message}</p>}
+            {errors.email && <p className="text-red-500 font-medium text-xs mt-1">{errors.email.message}</p>}
           </div>
 
           {/* Submit Button */}
           <button 
             type="submit" 
             disabled={isSubmitting}
-            className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-900 hover:bg-blue-800 focus:outline-none disabled:bg-blue-400 transition-colors"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-[0_4px_14px_0_rgba(99,102,241,0.39)] text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-500 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-[0.98]"
           >
-            {isSubmitting ? "Sending Link..." : "Send Reset Link"}
+            {isSubmitting ? "Sending link..." : "Send reset link"}
           </button>
         </form>
       ) : (
         /* Success Message UI */
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-          <h3 className="text-lg font-medium text-green-900 mb-2">Check your inbox</h3>
-          <p className="text-sm text-green-700">
-            We have sent a password reset link to your email address. Please check your spam folder if you don&apos;t see it.
+        <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6 text-center shadow-sm">
+          <div className="flex justify-center mb-4">
+             <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+             </div>
+          </div>
+          <h3 className="text-lg font-semibold text-emerald-900 mb-2">Check your inbox</h3>
+          <p className="text-sm text-emerald-700 mb-6 leading-relaxed">
+            We sent a password reset link to your email. Please check your spam folder if you don&apos;t see it.
           </p>
           <button 
             onClick={() => setIsSubmitted(false)}
-            className="mt-6 text-sm font-medium text-blue-600 hover:text-blue-500 transition-colors"
+            className="text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
           >
             Try another email address
           </button>
@@ -91,9 +83,9 @@ export default function ForgotPasswordScreen() {
       )}
 
       {/* Back to Login Link */}
-      <div className="mt-8 text-center">
-        <Link href="/login" className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Login
+      <div className="mt-8">
+        <Link href="/login" className="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors">
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to log in
         </Link>
       </div>
     </div>
