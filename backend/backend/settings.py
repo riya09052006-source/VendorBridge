@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "quotations",
     "approvals",
     "orders",
+    "invoices",
     "analytics",
 ]
 
